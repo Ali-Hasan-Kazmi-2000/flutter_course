@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_course/utils/my_routes.dart';
 
-class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+class LoginPage extends StatefulWidget {
+  const LoginPage({Key? key}) : super(key: key);
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  String name = ''; // Initialize the name variable
+  bool changeButton = false;
 
   @override
   Widget build(BuildContext context) {
@@ -18,9 +26,9 @@ class LoginPage extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
-            const Text(
-              "Welcome",
-              style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+            Text(
+              "Welcome $name",
+              style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
             ),
             const SizedBox(
               height: 20,
@@ -34,6 +42,12 @@ class LoginPage extends StatelessWidget {
                       hintText: "Enter username",
                       labelText: "Username",
                     ),
+                    onChanged: (value) {
+                      setState(() {
+                        name =
+                            value; // Update the name variable with the new value
+                      });
+                    },
                   ),
                   TextFormField(
                     obscureText: true,
@@ -48,14 +62,37 @@ class LoginPage extends StatelessWidget {
             const SizedBox(
               height: 40,
             ),
-            ElevatedButton(
-              onPressed: () {
+            InkWell(
+              onTap: () async {
+                setState(() {
+                  changeButton = true;
+                });
+
+                await Future.delayed(const Duration(seconds: 1));
+                // ignore: use_build_context_synchronously
                 Navigator.pushNamed(context, MyRoutes.homeRoute);
               },
-              style: ButtonStyle(
-                  foregroundColor: MaterialStateProperty.all(Colors.white),
-                  minimumSize: MaterialStateProperty.all(const Size(150, 40))),
-              child: const Text("Login"),
+              child: AnimatedContainer(
+                duration: const Duration(seconds: 1),
+                alignment: Alignment.center,
+                height: 50,
+                width: changeButton ? 50 : 150,
+                decoration: BoxDecoration(
+                    color: Colors.deepPurple,
+                    borderRadius: BorderRadius.circular(changeButton ? 50 : 8)),
+                child: changeButton
+                    ? const Icon(
+                        Icons.check,
+                        color: Colors.white,
+                      )
+                    : const Text(
+                        "Login",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold),
+                      ),
+              ),
             ),
           ],
         ),
