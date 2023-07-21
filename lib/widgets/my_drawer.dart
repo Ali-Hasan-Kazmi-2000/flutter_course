@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class MyDrawer extends StatelessWidget {
-  MyDrawer({super.key});
+  const MyDrawer({super.key});
 
   @override
   Widget build(BuildContext context) {

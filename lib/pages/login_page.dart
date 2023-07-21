@@ -84,7 +84,7 @@ class _LoginPageState extends State<LoginPage> {
                       validator: (value) {
                         if (value!.isEmpty) {
                           return "password can not be empty";
-                        } else if (value!.length < 6) {
+                        } else if (value.length < 6) {
                           return "password should be atleast 6 characters long";
                         }
                         return null;
@@ -100,7 +100,9 @@ class _LoginPageState extends State<LoginPage> {
                 color: Colors.deepPurple,
                 borderRadius: BorderRadius.circular(changeButton ? 50 : 8),
                 child: InkWell(
-                  onTap: () => moveToHome(context),
+                  onTap: () {
+                    moveToHome(context);
+                  },
                   child: AnimatedContainer(
                     duration: const Duration(seconds: 1),
                     alignment: Alignment.center,
